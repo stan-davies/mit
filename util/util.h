@@ -8,4 +8,8 @@ int rd_wk(
         void
 );
 
+float rweek(
+        int             offset
+);
+
 #endif

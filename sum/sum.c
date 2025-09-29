@@ -5,8 +5,6 @@
 
 #include "util/util.h"
 
-#define CH_LF   10
-#define CH_NL   0
 
 // #define CL_BLACK       0       
 #define CL_RED         1       
@@ -25,9 +23,6 @@
 // #define CL_L_CYAN      14
 #define CL_WHITE       15
 
-static float rweek(
-        int             offset
-);
 
 static void colourise(
         int             col
@@ -54,46 +49,6 @@ void sum(
 
         colourise(CL_WHITE);
         printf(".\n");
-}
-
-static float rweek(
-        int             offset
-) {
-        int w = rd_wk() - offset;
-
-        char *fname = calloc(8, sizeof(char));
-        sprintf(fname, "logs/%d", w);
-
-        FILE *f = fopen(fname, "r");
-        if (!f) {
-                return -1;
-        }
-
-        float total = 0.f;
-        char *buf = calloc(8, sizeof(char));
-        char c;
-        int j = 0;
-
-        while (EOF != (c = fgetc(f))) {
-                if (CH_LF == c) {
-                        total += atof(buf);
-                        for (int i = 0; i < 8; ++i) {
-                                buf[i] = CH_NL;
-                        }
-                        j = 0;
-                }
-                buf[j++] = c;
-        }
-
-        free(buf);
-        buf = NULL;
-
-        fclose(f);
-
-        free(fname);
-        fname = NULL;
-        
-        return total;
 }
 
 static void colourise(

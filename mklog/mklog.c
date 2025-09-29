@@ -10,9 +10,12 @@ static int get_wk(
         int             offset
 );
 
-
 static void up_wk(
         int             w
+);
+
+static void mk_sv(
+        void
 );
 
 void make_log(
@@ -48,6 +51,7 @@ static int get_wk(
 
         if (day == 7) {
                 up_wk(w);
+                mk_sv();
         }
 
         if (day - offset < 0) {
@@ -70,4 +74,38 @@ static void up_wk(
         fprintf(f, "%d", w);
 
         fclose(f);
+}
+
+static void mk_sv(
+        void
+) {
+        float t = rweek(0);
+
+        FILE *f = fopen("logs/save", "r+");
+        if (!f) {
+                return;
+        }
+
+        char *buf = calloc(8, sizeof(char));
+        char c;
+        int i;
+        while (EOF != (c = fgetc(f))) {
+                buf[i++] = c;
+        }
+
+        t = 100 - (t + atof(buf));
+        free(buf);
+        buf = NULL;
+
+        if (t <= 100.f) {
+                goto exit;
+        }
+
+        rewind(f);
+
+        fprintf(f, "%.2f", t);
+
+exit:
+        fclose(f);
+        f = NULL;
 }
