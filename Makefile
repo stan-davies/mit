@@ -1,5 +1,5 @@
 CMD = gcc
-SRC = main.c wspen/wspen.c cli/cli.c
+SRC = main.c cli/cli.c mklog/mklog.c sum/sum.c util/util.c
 OBJ = $(SRC:.c=.o)
 INC = -I .
 # TAG = -D SYS_WINDOWS
@@ -15,4 +15,4 @@ ${OBJ} : %.o: %.c
 
 clean :
 	@find . -type f -name '*.o' -delete
-	@rm prog
+	@rm out

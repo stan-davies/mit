@@ -5,13 +5,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "util.h"
+#include "util/util.h"
+#include "mklog/mklog.h"
+#include "sum/sum.h"
 
 #define MD_LOG  1
 #define MD_SUM  2
-
-#define PR_WEEK 1
-#define PR_MNTH 2
 
 #define TP_FLT  1
 #define TP_INT  2
@@ -55,10 +54,8 @@ void cli_act(
 
         if (0 == strcmp(argv[1], "log")) {
                 params.mode = MD_LOG;
-                printf("in mode log\n");
         } else if (0 == strcmp(argv[1], "sum")) {
                 params.mode = MD_SUM;
-                printf("in mode sum\n");
         } else {
                 printf("usage\n");
                 // 'usage'
@@ -75,7 +72,15 @@ void cli_act(
                 return;
         }
 
-        // route to action
+        switch (params.mode) {
+        case MD_LOG:
+                make_log(params.quant, params.offset);
+                sum(PR_WEEK);
+                break;
+        case MD_SUM:
+                sum(params.period);
+                break;
+        }
 }
 
 static int get_args(
