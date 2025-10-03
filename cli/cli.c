@@ -26,6 +26,7 @@ static struct {
         // for MD_LOG
         float           quant   ;
         int             offset  ;
+        int             special ;
         // for MD_SUM
         int             period  ;
 } params;
@@ -65,6 +66,7 @@ void cli_act(
         // defaults
         params.quant = 0.f;
         params.offset = 0;
+        params.special = FALSE;
         params.period = PR_WEEK;
 
 
@@ -74,8 +76,13 @@ void cli_act(
 
         switch (params.mode) {
         case MD_LOG:
-                make_log(params.quant, params.offset);
-                sum(PR_WEEK);
+                if (!params.special) {
+                        make_log(params.quant, params.offset);
+                        sum(PR_WEEK);
+                } else {
+                        make_log_sp(params.quant);
+                        sum_sp();
+                }
                 break;
         case MD_SUM:
                 sum(params.period);
@@ -117,6 +124,9 @@ static int get_args(
                                 goto exit;
                         }
                         params.offset = (int)tmpf;
+                        break;
+                case 's':
+                        params.special = TRUE;
                         break;
                 case 'w':
                         params.period = PR_WEEK;

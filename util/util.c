@@ -32,7 +32,7 @@ float rweek(
 
         FILE *f = fopen(fname, "r");
         if (!f) {
-                return -1;
+                return 0.f; // If no file, give 0 spending for that week
         }
 
         float total = 0.f;

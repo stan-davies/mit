@@ -19,7 +19,7 @@ static void mk_sv(
 );
 
 void make_log(
-        float           spen    ,
+        float           quant   ,
         int             offset
 ) {
         int w = get_wk(offset);
@@ -32,12 +32,17 @@ void make_log(
                 return;
         }
 
-        fprintf(f, "%.2f\n", spen);
+        fprintf(f, "%.2f\n", quant);
 
         fclose(f);
 
         free(fname);
         fname = NULL;
+}
+
+void make_log_sp(
+        float           quant
+) {
 }
 
 static int get_wk(

@@ -5,7 +5,6 @@
 
 #include "util/util.h"
 
-
 // #define CL_BLACK       0       
 #define CL_RED         1       
 #define CL_GREEN       2       
@@ -23,7 +22,6 @@
 // #define CL_L_CYAN      14
 #define CL_WHITE       15
 
-
 static void colourise(
         int             col
 );
@@ -31,15 +29,24 @@ static void colourise(
 void sum(
         int             period
 ) {
-        float t = rweek(0);
+        float t;
+        char *pr_str = calloc(8, sizeof(char));
 
-        printf("So far this week you have spent ");
+        if (PR_WEEK == period) {
+                t = rweek(0);
+                sprintf(pr_str, "week");
+        } else if (PR_MNTH == period) {
+                t = rweek(0) + rweek(1) + rweek(2) + rweek(3);
+                sprintf(pr_str, "month");
+        }
 
-        if (t <= 40.f) {
+        printf("So far this %s you have spent ", pr_str);
+
+        if (t <= 40.f * period) {
                 colourise(CL_GREEN);
-        } else if (t <= 70.f) {
+        } else if (t <= 70.f * period) {
                 colourise(CL_L_GREEN);
-        } else if (t <= 100.f) {
+        } else if (t <= 100.f * period) {
                 colourise(CL_YELLOW);
         } else {
                 colourise(CL_L_RED);
@@ -49,6 +56,11 @@ void sum(
 
         colourise(CL_WHITE);
         printf(".\n");
+}
+
+void sum_sp(
+        void
+) {
 }
 
 static void colourise(
