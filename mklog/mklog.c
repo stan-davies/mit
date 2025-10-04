@@ -43,7 +43,7 @@ void make_log(
 void make_log_sp(
         float           quant
 ) {
-        FILE *f = fopen("logs/save", "r");
+        FILE *f = fopen("logs/save", "r+");
         if (NULL == f) {
                 return;
         }
@@ -55,22 +55,13 @@ void make_log_sp(
                 buf[i++] = c;
         }
 
-        fclose(f);
+        rewind(f);
 
-        float s = atof(buf);
-        printf("ss: '%s', s: %.2f, q: %.2f s - q: %.2f\n", buf, s, quant, s - quant);
+        float s = atof(buf) - quant;
         free(buf);
         buf = NULL;
 
-        s -= quant;
-
-        f = fopen("logs/save", "w");
-        if (!f) {
-                return;
-        }
-
         fprintf(f, "%.2f", s);
-
         fclose(f);
 }
 
@@ -122,7 +113,7 @@ static void mk_sv(
 
         char *buf = calloc(8, sizeof(char));
         char c;
-        int i;
+        int i = 0;
         while (EOF != (c = fgetc(f))) {
                 buf[i++] = c;
         }
