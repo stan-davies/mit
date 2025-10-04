@@ -61,6 +61,25 @@ void sum(
 void sum_sp(
         void
 ) {
+        FILE *f = fopen("logs/save", "r");
+        if (!f) {
+                return;
+        }
+
+        char *buf = calloc(8, sizeof(char));
+        char c;
+        int i = 0;
+        while (EOF != (c = fgetc(f))) {
+                buf[i++] = c;
+        }
+
+        fclose(f);
+
+        float s = atof(buf);
+        free(buf);
+        buf = NULL;
+
+        printf("Total savings are currently £%.2f.\n", s);
 }
 
 static void colourise(
