@@ -23,11 +23,8 @@
 static struct {
         int             mode    ;
 
-        // for MD_LOG
         float           quant   ;
         int             offset  ;
-        int             special ;
-        // for MD_SUM
         int             period  ;
 } params;
 
@@ -49,7 +46,7 @@ void cli_act(
         char          **argv
 ) {
         if (1 == argc) {
-                printf("usage\n");
+                printf("Choose mode 'log' or 'sum'.\n");
                 return;
         }
 
@@ -58,17 +55,14 @@ void cli_act(
         } else if (0 == strcmp(argv[1], "sum")) {
                 params.mode = MD_SUM;
         } else {
-                printf("usage\n");
-                // 'usage'
+                printf("Choose mode 'log' or 'sum'.\n");
                 return;
         }
 
         // defaults
         params.quant = 0.f;
         params.offset = 0;
-        params.special = FALSE;
         params.period = PR_WEEK;
-
 
         if (!get_args(argc, argv)) {
                 return;
@@ -76,12 +70,12 @@ void cli_act(
 
         switch (params.mode) {
         case MD_LOG:
-                if (!params.special) {
-                        make_log(params.quant, params.offset);
-                        sum(PR_WEEK);
-                } else {
+                if (PR_SPEC == params.period) {
                         make_log_sp(params.quant);
                         sum_sp();
+                } else {
+                        make_log(params.quant, params.offset);
+                        sum(PR_WEEK);
                 }
                 break;
         case MD_SUM:
@@ -95,41 +89,41 @@ static int get_args(
         char          **argv
 ) {
         char *optstr = calloc(8, sizeof(char));
+        int ret = TRUE;
+        int opt;
+        float fv;
+
         switch (params.mode) {
         case MD_LOG:
                 sprintf(optstr, ":q:o:s");
                 break;
         case MD_SUM:
-                sprintf(optstr, ":wm");
+                sprintf(optstr, ":wms");
                 break;
         default:
                 break;
         }
 
-        int ret = TRUE;
-
-        int opt;
         opterr = 0;     // don't add error messages
         optind = 2;     // start from after word command
         while (-1 != (opt = getopt(argc, argv, optstr))) {
                 switch (opt) {
                 case 'q':
                         if (!get_num(TP_FLT, optarg, &params.quant)) {
-                                // usage
+                                printf("Found non-number value for 'q'.\n");
                                 ret = FALSE;
                         }
                         break;
                 case 'o':
-                        float tmpf;
-                        if (!get_num(TP_INT, optarg, &tmpf)) {
-                                // usage
+                        if (!get_num(TP_INT, optarg, &fv)) {
+                                printf("Found non-number value for 'o'.\n");
                                 ret = FALSE;
                                 break;
                         }
-                        params.offset = (int)tmpf;
+                        params.offset = (int)fv;
                         break;
                 case 's':
-                        params.special = TRUE;
+                        params.period = PR_SPEC;
                         break;
                 case 'w':
                         params.period = PR_WEEK;
@@ -149,7 +143,6 @@ static int get_args(
                 }
         }
 
-exit:
         free(optstr);
         optstr = NULL;
 

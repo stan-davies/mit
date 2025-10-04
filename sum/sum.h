@@ -3,6 +3,7 @@
 
 #define PR_WEEK 1
 #define PR_MNTH 4
+#define PR_SPEC 2
 
 void sum(
         int             period

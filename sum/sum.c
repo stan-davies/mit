@@ -38,6 +38,9 @@ void sum(
         } else if (PR_MNTH == period) {
                 t = rweek(0) + rweek(1) + rweek(2) + rweek(3);
                 sprintf(pr_str, "month");
+        } else if (PR_SPEC == period) {
+                sum_sp();
+                goto exit;
         }
 
         printf("So far this %s you have spent ", pr_str);
@@ -56,6 +59,10 @@ void sum(
 
         colourise(CL_WHITE);
         printf(".\n");
+
+exit:
+        free(pr_str);
+        pr_str = NULL;
 }
 
 void sum_sp(
