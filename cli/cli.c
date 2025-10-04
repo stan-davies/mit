@@ -97,7 +97,7 @@ static int get_args(
         char *optstr = calloc(8, sizeof(char));
         switch (params.mode) {
         case MD_LOG:
-                sprintf(optstr, ":q:o:");
+                sprintf(optstr, ":q:o:s");
                 break;
         case MD_SUM:
                 sprintf(optstr, ":wm");
@@ -105,6 +105,8 @@ static int get_args(
         default:
                 break;
         }
+
+        int ret = TRUE;
 
         int opt;
         opterr = 0;     // don't add error messages
@@ -114,14 +116,15 @@ static int get_args(
                 case 'q':
                         if (!get_num(TP_FLT, optarg, &params.quant)) {
                                 // usage
-                                goto exit;
+                                ret = FALSE;
                         }
                         break;
                 case 'o':
                         float tmpf;
                         if (!get_num(TP_INT, optarg, &tmpf)) {
                                 // usage
-                                goto exit;
+                                ret = FALSE;
+                                break;
                         }
                         params.offset = (int)tmpf;
                         break;
@@ -136,10 +139,12 @@ static int get_args(
                         break;
                 case ':':
                         printf("No argument given for option '%c'.\n", optopt);
+                        ret = FALSE;
                         break;
                 case '?':
                 default:
                         printf("Invalid option given at '%c'.\n", optopt);
+                        ret = FALSE;
                         break;
                 }
         }
@@ -147,6 +152,8 @@ static int get_args(
 exit:
         free(optstr);
         optstr = NULL;
+
+        return ret;
 }
 
 static int get_num(
