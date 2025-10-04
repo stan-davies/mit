@@ -29,7 +29,7 @@ static void colourise(
 void sum(
         int             period
 ) {
-        float t;
+        float t = 0.f;
         char *pr_str = calloc(8, sizeof(char));
 
         if (PR_WEEK == period) {
@@ -41,7 +41,9 @@ void sum(
         } else if (PR_SPEC == period) {
                 sum_sp();
                 goto exit;
-        }
+        } // Cannot be false because dude trust me (only ever given one of
+          // three above values). However, the compiler throws a warning if I
+          // don't set 't = 0.f' at the top.
 
         printf("So far this %s you have spent ", pr_str);
 

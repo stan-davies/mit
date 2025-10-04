@@ -2,14 +2,13 @@ CMD = gcc
 SRC = main.c cli/cli.c mklog/mklog.c sum/sum.c util/util.c
 OBJ = $(SRC:.c=.o)
 INC = -I .
-# TAG = -D SYS_WINDOWS
 
 all : ${OBJ}
-	clear
+# 	clear
 	${CMD} $^ ${INC} -Wall -pedantic -Wextra -o out
 
 ${OBJ} : %.o: %.c
-	clear
+#	clear
 	${CMD} ${INC} -Wall -pedantic -Wextra -c $^ -o $@
 
 

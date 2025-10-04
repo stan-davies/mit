@@ -176,4 +176,6 @@ cont:
 
         c = NULL;
         *num = atof(str);
+
+        return TRUE;
 }
