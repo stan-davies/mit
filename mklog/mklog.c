@@ -6,6 +6,8 @@
 
 #include "util/util.h"
 
+#define SUNDAY  1
+
 static int get_wk(
         int             offset
 );
@@ -72,14 +74,15 @@ static int get_wk(
         struct tm datetime = *localtime(&t);
         int day = datetime.tm_wday + 1;
 
-        int w = rd_wk();                
+        int w = rd_wk();
 
-        if (day == 7) {
-                up_wk(w);
+        if (0 == offset && SUNDAY == day) {
+                printf("Today is Sunday. Moving to new week.\n");
                 mk_sv();
+                up_wk(w);
         }
 
-        if (day - offset < 0) {
+        if (day - offset <= 0) {
                 w--;
         }
 
@@ -96,7 +99,7 @@ static void up_wk(
                 return;
         }
 
-        fprintf(f, "%d", w);
+        fprintf(f, "%d", w + 1);
 
         fclose(f);
 }
@@ -118,19 +121,17 @@ static void mk_sv(
                 buf[i++] = c;
         }
 
-        t = (100 - t) + atof(buf);
+        if (t >= 100.f) {
+                printf("No savings this week.\n");
+        } else {
+                t = (100.f - t) + atof(buf);
+        }
+
         free(buf);
         buf = NULL;
 
-        if (t <= 100.f) {
-                goto exit;
-        }
-
         rewind(f);
-
         fprintf(f, "%.2f", t);
 
-exit:
         fclose(f);
-        f = NULL;
 }
