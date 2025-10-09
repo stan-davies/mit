@@ -6,5 +6,8 @@ void cli_act(
         char          **argv
 );
 
+int rq_up_wk(
+        void
+);
 
 #endif

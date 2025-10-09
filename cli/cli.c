@@ -20,6 +20,8 @@
 #define CH_PT   46
 #define CH_NUL  0
 
+#define REP_YES 121
+
 static struct {
         int             mode    ;
 
@@ -178,4 +180,15 @@ cont:
         *num = atof(str);
 
         return TRUE;
+}
+
+int rq_up_wk(
+        void
+) {
+        char rep;
+
+        printf("Today is Sunday, would you like to proceed to a new week?\n");
+        scanf("%c", &rep);
+
+        return REP_YES == rep;
 }

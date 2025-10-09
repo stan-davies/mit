@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "util/util.h"
+#include "cli/cli.h"
 
 #define SUNDAY  1
 
@@ -76,8 +77,7 @@ static int get_wk(
 
         int w = rd_wk();
 
-        if (0 == offset && SUNDAY == day) {
-                printf("Today is Sunday. Moving to new week.\n");
+        if (0 == offset && SUNDAY == day && rq_up_wk()) {
                 mk_sv();
                 up_wk(w);
         }
