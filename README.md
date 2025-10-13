@@ -4,5 +4,6 @@ Money Tracker. I can't remember why there is an 'i' in it.
 
 TODO:
 
-- redo summary system so that it is just given a parameter 'p' for period, that
-  being the number of weeks to give data on
+- consider scrapping offset for logging
+- logging confirm message
+- work out why current week isn't being summaried
