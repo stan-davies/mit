@@ -23,52 +23,29 @@
 #define CL_WHITE       15
 
 static void colourise(
-        int             col
-);
-
-static float sum_month(
-        void
+        int             period          ,
+        float           total
 );
 
 void sum(
         int             period
 ) {
-        float t = 0.f;
-        char *pr_str = calloc(8, sizeof(char));
-
-        if (PR_WEEK == period) {
-                t = rweek(0);
-                sprintf(pr_str, "week");
-        } else if (PR_MNTH == period) {
-                t = sum_month();
-                sprintf(pr_str, "month");
-        } else if (PR_SPEC == period) {
+        if (PR_SPEC == period) {
                 sum_sp();
-                goto exit;
-        } // Cannot be false because dude trust me (only ever given one of
-          // three above values). However, the compiler throws a warning if I
-          // don't set 't = 0.f' at the top.
-
-        printf("So far this %s you have spent ", pr_str);
-
-        if (t <= 40.f * period) {
-                colourise(CL_GREEN);
-        } else if (t <= 70.f * period) {
-                colourise(CL_L_GREEN);
-        } else if (t <= 100.f * period) {
-                colourise(CL_YELLOW);
-        } else {
-                colourise(CL_L_RED);
+                return;
         }
 
-        printf("£%.2f", t);
+        float q;
+        float t = 0.f;
+        for (int w = period; w > 0; --w) {
+                q = rweek(w);
+                printf("Week %d: ", period - w + 1);
+                colourise(1, q);
+                t += q;
+        }
 
-        colourise(CL_WHITE);
-        printf(".\n");
-
-exit:
-        free(pr_str);
-        pr_str = NULL;
+        printf("In total over this period you have spent ");
+        colourise(period, t);
 }
 
 void sum_sp(
@@ -95,27 +72,19 @@ void sum_sp(
         printf("Total savings are currently £%.2f.\n", s);
 }
 
-static float sum_month(
-        void
-) {
-        float w1 = rweek(3);
-        float w2 = rweek(2);
-        float w3 = rweek(1);
-        float w4 = rweek(0);
-
-        printf("Week breakdown:\n 1. £%.2f\n 2. £%.2f\n 3. £%.2f\n 4. £%.2f\n", 
-                w1, w2, w3, w4);
-
-        return w1 + w2 + w3 + w4;
-}
-
 static void colourise(
-        int             col
+        int             period          ,
+        float           total
 ) {
-        if (CL_WHITE == col) {
-                printf("\033[0m");
-                return;
-        }
+        int col = CL_L_RED;
 
-        printf("\033[%d;3%dm", col / 8, col % 8);
+        if (total <= 40.f * period) {
+                col = CL_GREEN;
+        } else if (total <= 70.f * period) {
+                col = CL_L_GREEN;
+        } else if (total <= 100.f * period) {
+                col = CL_YELLOW;
+        }
+        
+        printf("\033[%d;3%dm£%.2f\033[0m\n", col / 8, col % 8, total);
 }

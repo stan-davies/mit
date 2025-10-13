@@ -1,3 +1,4 @@
+#define PR_SPEC -1
 #include "cli.h"
 
 #include <string.h>
@@ -64,7 +65,7 @@ void cli_act(
         // defaults
         params.quant = 0.f;
         params.offset = 0;
-        params.period = PR_WEEK;
+        params.period = 1;
 
         if (!get_args(argc, argv)) {
                 return;
@@ -77,7 +78,7 @@ void cli_act(
                         sum_sp();
                 } else {
                         make_log(params.quant, params.offset);
-                        sum(PR_WEEK);
+                        sum(1);
                 }
                 break;
         case MD_SUM:
@@ -100,7 +101,7 @@ static int get_args(
                 sprintf(optstr, ":q:o:s");
                 break;
         case MD_SUM:
-                sprintf(optstr, ":wms");
+                sprintf(optstr, ":p:s");
                 break;
         default:
                 break;
@@ -127,11 +128,13 @@ static int get_args(
                 case 's':
                         params.period = PR_SPEC;
                         break;
-                case 'w':
-                        params.period = PR_WEEK;
-                        break;
-                case 'm':
-                        params.period = PR_MNTH;
+                case 'p':
+                        if (!get_num(TP_INT, optarg, &fv)) {
+                                printf("Found non-number value for 'p'.\n");
+                                ret = FALSE;
+                                break;
+                        }
+                        params.period = (int)fv;
                         break;
                 case ':':
                         printf("No argument given for option '%c'.\n", optopt);
