@@ -44,6 +44,10 @@ void sum(
                 t += q;
         }
 
+        if (1 == period) {      // No need to give period summary for single
+                return;         // unit period.
+        }
+
         printf("In total over this period you have spent ");
         colourise(period, t);
 }

@@ -27,7 +27,6 @@ static struct {
         int             mode    ;
 
         float           quant   ;
-        int             offset  ;
         int             period  ;
 } params;
 
@@ -35,7 +34,6 @@ static int get_args(
         int             argc    ,
         char          **argv
 );
-
 
 static int get_num(
         int             type    ,
@@ -64,7 +62,6 @@ void cli_act(
 
         // defaults
         params.quant = 0.f;
-        params.offset = 0;
         params.period = 1;
 
         if (!get_args(argc, argv)) {
@@ -75,9 +72,12 @@ void cli_act(
         case MD_LOG:
                 if (PR_SPEC == params.period) {
                         make_log_sp(params.quant);
+                        printf("Logged savings spendings of £%.2f.\n",
+                                params.quant);
                         sum_sp();
                 } else {
-                        make_log(params.quant, params.offset);
+                        make_log(params.quant);
+                        printf("Logged spendings of £%.2f.\n", params.quant);
                         sum(1);
                 }
                 break;
@@ -98,7 +98,7 @@ static int get_args(
 
         switch (params.mode) {
         case MD_LOG:
-                sprintf(optstr, ":q:o:s");
+                sprintf(optstr, ":q:s");
                 break;
         case MD_SUM:
                 sprintf(optstr, ":p:s");
@@ -116,14 +116,6 @@ static int get_args(
                                 printf("Found non-number value for 'q'.\n");
                                 ret = FALSE;
                         }
-                        break;
-                case 'o':
-                        if (!get_num(TP_INT, optarg, &fv)) {
-                                printf("Found non-number value for 'o'.\n");
-                                ret = FALSE;
-                                break;
-                        }
-                        params.offset = (int)fv;
                         break;
                 case 's':
                         params.period = PR_SPEC;

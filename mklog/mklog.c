@@ -10,7 +10,7 @@
 #define SUNDAY  0
 
 static int get_wk(
-        int             offset
+        void
 );
 
 static void up_wk(
@@ -22,10 +22,9 @@ static void mk_sv(
 );
 
 void make_log(
-        float           quant   ,
-        int             offset
+        float           quant
 ) {
-        int w = get_wk(offset);
+        int w = get_wk();
         
         char *fname = calloc(8, sizeof(char));
         sprintf(fname, "logs/%d", w);
@@ -69,7 +68,7 @@ void make_log_sp(
 }
 
 static int get_wk(
-        int             offset
+        void
 ) {
         time_t t = time(NULL);
         struct tm datetime = *localtime(&t);
@@ -77,13 +76,9 @@ static int get_wk(
 
         int w = rd_wk();
 
-        if (0 == offset && SUNDAY == day && rq_up_wk()) {
+        if (SUNDAY == day && rq_up_wk()) {
                 mk_sv();
                 up_wk(w);
-        }
-
-        if (day - offset <= 0) {
-                w--;
         }
 
         return w;

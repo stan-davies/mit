@@ -2,8 +2,7 @@
 #define MKLOG_H
 
 void make_log(
-        float           quant   ,
-        int             offset
+        float           quant
 );
 
 void make_log_sp(
