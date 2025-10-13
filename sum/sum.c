@@ -26,6 +26,10 @@ static void colourise(
         int             col
 );
 
+static float sum_month(
+        void
+);
+
 void sum(
         int             period
 ) {
@@ -36,7 +40,7 @@ void sum(
                 t = rweek(0);
                 sprintf(pr_str, "week");
         } else if (PR_MNTH == period) {
-                t = rweek(0) + rweek(1) + rweek(2) + rweek(3);
+                t = sum_month();
                 sprintf(pr_str, "month");
         } else if (PR_SPEC == period) {
                 sum_sp();
@@ -89,6 +93,20 @@ void sum_sp(
         buf = NULL;
 
         printf("Total savings are currently £%.2f.\n", s);
+}
+
+static float sum_month(
+        void
+) {
+        float w1 = rweek(3);
+        float w2 = rweek(2);
+        float w3 = rweek(1);
+        float w4 = rweek(0);
+
+        printf("Week breakdown:\n 1. £%.2f\n 2. £%.2f\n 3. £%.2f\n 4. £%.2f\n", 
+                w1, w2, w3, w4);
+
+        return w1 + w2 + w3 + w4;
 }
 
 static void colourise(
