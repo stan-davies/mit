@@ -7,7 +7,7 @@
 #include "util/util.h"
 #include "cli/cli.h"
 
-#define SUNDAY  1
+#define SUNDAY  0
 
 static int get_wk(
         int             offset
@@ -73,7 +73,7 @@ static int get_wk(
 ) {
         time_t t = time(NULL);
         struct tm datetime = *localtime(&t);
-        int day = datetime.tm_wday + 1;
+        int day = datetime.tm_wday;             // Days since Sunday
 
         int w = rd_wk();
 
