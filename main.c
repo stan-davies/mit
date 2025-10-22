@@ -8,4 +8,5 @@ int main(
         char          **argv
 ) {
         cli_act(argc, argv);
+        return 1;
 }

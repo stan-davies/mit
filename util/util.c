@@ -3,15 +3,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "paths.h"
+
 #define CH_LF   10
 #define CH_NL   0
 
 int rd_wk(
         void
 ) {
-        FILE *f = fopen("logs/curr", "r");
+        FILE *f = fopen(CURR_PATH, "r");
         if (!f) {
-                return 1;
+                printf("Error: current week file not found.\n");
+                return 1; // What is this?
         }
 
         char *cnt = calloc(8, sizeof(char));
@@ -28,10 +31,13 @@ float rweek(
         int w = rd_wk() - offset;
 
         char *fname = calloc(8, sizeof(char));
-        sprintf(fname, "logs/%d", w);
+        sprintf(fname, "%s/%d", LOGS_PATH, w);
+
+        printf("Searching for '%s'.\n", fname);
 
         FILE *f = fopen(fname, "r");
         if (!f) {
+                printf("File not found.\n");
                 return 0.f; // If no file, give 0 spending for that week
         }
 

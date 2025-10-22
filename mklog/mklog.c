@@ -31,6 +31,7 @@ void make_log(
 
         FILE *f = fopen(fname, "a");
         if (!f) {
+                printf("Error: Log file not found.\n");
                 return;
         }
 

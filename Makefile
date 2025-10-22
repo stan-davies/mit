@@ -2,10 +2,11 @@ CMD = gcc
 SRC = main.c cli/cli.c mklog/mklog.c sum/sum.c util/util.c
 OBJ = $(SRC:.c=.o)
 INC = -I .
+OUT = mit
 
 all : ${OBJ}
 # 	clear
-	${CMD} $^ ${INC} -Wall -pedantic -Wextra -o out
+	${CMD} $^ ${INC} -Wall -pedantic -Wextra -o ${OUT}
 
 ${OBJ} : %.o: %.c
 #	clear
@@ -14,4 +15,4 @@ ${OBJ} : %.o: %.c
 
 clean :
 	@find . -type f -name '*.o' -delete
-	@rm out
+	@rm ${OUT}
