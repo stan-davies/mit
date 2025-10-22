@@ -67,3 +67,27 @@ exit:
         
         return total;
 }
+
+float rspec(
+        void
+) {
+        FILE *f = fopen(SAVE_PATH, "r");
+        if (!f) {
+                return 0.f;
+        }
+
+        char *buf = calloc(8, sizeof(char));
+        char c;
+        int i = 0;
+        while (EOF != (c = fgetc(f))) {
+                buf[i++] = c;
+        }
+
+        fclose(f);
+
+        float total = atof(buf);
+        free(buf);
+        buf = NULL;
+
+        return total;
+}

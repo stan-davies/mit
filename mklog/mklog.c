@@ -21,7 +21,7 @@ static void mk_sv(
         void
 );
 
-void make_log(
+void mk_log(
         float           quant
 ) {
         int w = get_wk();
@@ -43,30 +43,6 @@ void make_log(
         fname = NULL;
 }
 
-void make_log_sp(
-        float           quant
-) {
-        FILE *f = fopen(SAVE_PATH, "r+");
-        if (NULL == f) {
-                return;
-        }
-
-        char *buf = calloc(8, sizeof(char));
-        char c;
-        int i = 0;
-        while (EOF != (c = fgetc(f))) {
-                buf[i++] = c;
-        }
-
-        rewind(f);
-
-        float s = atof(buf) - quant;
-        free(buf);
-        buf = NULL;
-
-        fprintf(f, "%.2f", s);
-        fclose(f);
-}
 
 static int get_wk(
         void
@@ -85,13 +61,11 @@ static int get_wk(
         return w;
 }
 
-
 static void up_wk(
         int             w
 ) {
         FILE *f = fopen(CURR_PATH, "w");
         if (!f) {
-                printf("Could not overwrite file 'logs/curr'.\n");
                 return;
         }
 
@@ -103,31 +77,26 @@ static void up_wk(
 static void mk_sv(
         void
 ) {
-        float t = rweek(0);
+        float t = 100.f - rweek(0);
 
-        FILE *f = fopen(SAVE_PATH, "r+");
+        if (t <= 0.f) {
+                printf("No savings this week.\n");
+                return;
+        }
+
+        adj_sv(t);
+}
+
+void adj_sv(
+        float           quant
+) {
+        float s = rspec() + quant;
+
+        FILE *f = fopen(SAVE_PATH, "w");
         if (!f) {
                 return;
         }
 
-        char *buf = calloc(8, sizeof(char));
-        char c;
-        int i = 0;
-        while (EOF != (c = fgetc(f))) {
-                buf[i++] = c;
-        }
-
-        if (t >= 100.f) {
-                printf("No savings this week.\n");
-        } else {
-                t = (100.f - t) + atof(buf);
-        }
-
-        free(buf);
-        buf = NULL;
-
-        rewind(f);
-        fprintf(f, "%.2f", t);
-
+        fprintf(f, "%.2f", s);
         fclose(f);
 }

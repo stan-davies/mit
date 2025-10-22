@@ -1,11 +1,11 @@
 #ifndef MKLOG_H
 #define MKLOG_H
 
-void make_log(
+void mk_log(
         float           quant
 );
 
-void make_log_sp(
+void adj_sv(
         float           quant
 );
 

@@ -14,4 +14,8 @@ float rweek(
         int             offset
 );
 
+float rspec(
+        void
+);
+
 #endif

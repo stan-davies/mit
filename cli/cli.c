@@ -71,12 +71,12 @@ void cli_act(
         switch (params.mode) {
         case MD_LOG:
                 if (PR_SPEC == params.period) {
-                        make_log_sp(params.quant);
+                        adj_sv(-params.quant);
                         printf("Logged savings spendings of £%.2f.\n",
                                 params.quant);
                         sum_sp();
                 } else {
-                        make_log(params.quant);
+                        mk_log(params.quant);
                         printf("Logged spendings of £%.2f.\n", params.quant);
                         sum(1);
                 }
