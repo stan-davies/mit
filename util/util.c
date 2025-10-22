@@ -6,7 +6,7 @@
 #define CH_LF   10
 #define CH_NL   0
 
-int rd_wk(
+int rcurr(
         void
 ) {
         FILE *f = fopen(CURR_PATH, "r");
@@ -27,7 +27,7 @@ int rd_wk(
 float rweek(
         int             offset
 ) {
-        int w = rd_wk() - offset;
+        int w = rcurr() - offset;
 
         char *fname = calloc(8, sizeof(char));
         sprintf(fname, "%s/%d", LOGS_PATH, w);

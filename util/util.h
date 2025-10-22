@@ -6,7 +6,7 @@
 
 #include "paths.h"
 
-int rd_wk(
+int rcurr(
         void
 );
 

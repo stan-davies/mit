@@ -52,7 +52,7 @@ static int get_wk(
         struct tm datetime = *localtime(&t);
         int day = datetime.tm_wday;             // Days since Sunday
 
-        int w = rd_wk();
+        int w = rcurr();
 
         if (SUNDAY == day && rq_up_wk()) {
                 mk_sv();
