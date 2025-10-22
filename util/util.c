@@ -11,7 +11,7 @@ int rcurr(
 ) {
         FILE *f = fopen(CURR_PATH, "r");
         if (!f) {
-                // Default value, start afresh. If week progresses, 2 will be
+                // Default value, start afresh. When week progresses, 2 will be
                 // written.
                 return 1;
         }
