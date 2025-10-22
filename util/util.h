@@ -4,6 +4,8 @@
 #define TRUE    1
 #define FALSE   0
 
+#include "paths.h"
+
 int rd_wk(
         void
 );

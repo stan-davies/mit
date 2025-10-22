@@ -55,7 +55,7 @@ void sum(
 void sum_sp(
         void
 ) {
-        FILE *f = fopen("logs/save", "r");
+        FILE *f = fopen(SAVE_PATH, "r");
         if (!f) {
                 return;
         }

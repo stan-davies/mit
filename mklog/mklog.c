@@ -27,7 +27,7 @@ void make_log(
         int w = get_wk();
         
         char *fname = calloc(8, sizeof(char));
-        sprintf(fname, "logs/%d", w);
+        sprintf(fname, "%s/%d", LOGS_PATH, w);
 
         FILE *f = fopen(fname, "a");
         if (!f) {
@@ -46,7 +46,7 @@ void make_log(
 void make_log_sp(
         float           quant
 ) {
-        FILE *f = fopen("logs/save", "r+");
+        FILE *f = fopen(SAVE_PATH, "r+");
         if (NULL == f) {
                 return;
         }
@@ -89,7 +89,7 @@ static int get_wk(
 static void up_wk(
         int             w
 ) {
-        FILE *f = fopen("logs/curr", "w");
+        FILE *f = fopen(CURR_PATH, "w");
         if (!f) {
                 printf("Could not overwrite file 'logs/curr'.\n");
                 return;
@@ -105,7 +105,7 @@ static void mk_sv(
 ) {
         float t = rweek(0);
 
-        FILE *f = fopen("logs/save", "r+");
+        FILE *f = fopen(SAVE_PATH, "r+");
         if (!f) {
                 return;
         }

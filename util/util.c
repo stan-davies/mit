@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "paths.h"
-
 #define CH_LF   10
 #define CH_NL   0
 
@@ -13,8 +11,9 @@ int rd_wk(
 ) {
         FILE *f = fopen(CURR_PATH, "r");
         if (!f) {
-                printf("Error: current week file not found.\n");
-                return 1; // What is this?
+                // Default value, start afresh. If week progresses, 2 will be
+                // written.
+                return 1;
         }
 
         char *cnt = calloc(8, sizeof(char));
@@ -33,15 +32,15 @@ float rweek(
         char *fname = calloc(8, sizeof(char));
         sprintf(fname, "%s/%d", LOGS_PATH, w);
 
-        printf("Searching for '%s'.\n", fname);
+        float total = 0.f;
 
         FILE *f = fopen(fname, "r");
         if (!f) {
-                printf("File not found.\n");
-                return 0.f; // If no file, give 0 spending for that week
+                printf("Error: File '%s' not found.\n", fname);
+                // If no file, give 0 spending for that week, i.e. total = 0.f
+                goto exit;
         }
 
-        float total = 0.f;
         char *buf = calloc(8, sizeof(char));
         char c;
         int j = 0;
@@ -62,6 +61,7 @@ float rweek(
 
         fclose(f);
 
+exit:
         free(fname);
         fname = NULL;
         
