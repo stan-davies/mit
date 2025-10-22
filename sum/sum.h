@@ -7,7 +7,7 @@ void sum(
         int             period
 );
 
-void sum_sp(
+void sum_sv(
         void
 );
 

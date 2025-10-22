@@ -74,7 +74,7 @@ void cli_act(
                         adj_sv(-params.quant);
                         printf("Logged savings spendings of £%.2f.\n",
                                 params.quant);
-                        sum_sp();
+                        sum_sv();
                 } else {
                         mk_log(params.quant);
                         printf("Logged spendings of £%.2f.\n", params.quant);

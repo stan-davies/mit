@@ -80,7 +80,7 @@ static void mk_sv(
 ) {
         float t = 100.f - rweek(0);
 
-        sum_sp();
+        sum_sv();
 
         if (t <= 0.f) {
                 printf("No savings this week.\n");

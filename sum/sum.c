@@ -19,7 +19,7 @@ void sum(
         int             period
 ) {
         if (PR_SPEC == period) {
-                sum_sp();
+                sum_sv();
                 return;
         }
 
@@ -40,7 +40,7 @@ void sum(
         colourise(period, t);
 }
 
-void sum_sp(
+void sum_sv(
         void
 ) {
         float s = rspec();
