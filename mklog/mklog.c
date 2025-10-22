@@ -6,6 +6,7 @@
 
 #include "util/util.h"
 #include "cli/cli.h"
+#include "sum/sum.h"
 
 #define SUNDAY  0
 
@@ -79,10 +80,14 @@ static void mk_sv(
 ) {
         float t = 100.f - rweek(0);
 
+        sum_sp();
+
         if (t <= 0.f) {
                 printf("No savings this week.\n");
                 return;
         }
+
+        printf("Savings of £%.2f this week.\n", t);
 
         adj_sv(t);
 }
