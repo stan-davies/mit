@@ -19,6 +19,7 @@
 #define CH_ZER  48
 #define CH_NIN  57
 #define CH_PT   46
+#define CH_MIN  45
 #define CH_NUL  0
 
 #define REP_YES 121
@@ -153,6 +154,10 @@ static int get_num(
 ) {
         char *c = str;
         int pt = FALSE;
+
+        if (CH_MIN == *c) {
+                c++;
+        }
 
         for (;;) {
                 if (CH_NUL == *c) {
