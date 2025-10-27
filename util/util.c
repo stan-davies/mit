@@ -16,12 +16,27 @@ int rcurr(
                 return 1;
         }
 
-        char *cnt = calloc(8, sizeof(char));
-        fread(cnt, sizeof(char), 8, f);
+        printf("opened\n");
+
+        char *buf = calloc(8, sizeof(char));
+        char c;
+        int i = 0;
+        while (EOF != (c = fgetc(f))) {
+                printf("at '%c'\n", c);
+                buf[i++] = c;
+        }
 
         fclose(f);
 
-        return atoi(cnt);
+//        char *cnt = calloc(8, sizeof(char));
+//        fread(cnt, sizeof(char), 8, f);
+
+        printf("got '%s'\n", buf);
+        printf("which is %d\n", atoi(buf));
+
+//        fclose(f);
+
+        return atoi(buf);
 }
 
 float rweek(

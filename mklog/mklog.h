@@ -9,4 +9,8 @@ void adj_sv(
         float           quant
 );
 
+void up_wk(
+        void
+);
+
 #endif

@@ -56,8 +56,12 @@ void cli_act(
                 params.mode = MD_LOG;
         } else if (0 == strcmp(argv[1], "sum")) {
                 params.mode = MD_SUM;
+        } else if (0 == strcmp(argv[1], "pwk")) {
+                up_wk();                
+                printf("Progressed week.\n");
+                return;
         } else {
-                printf("Choose mode 'log' or 'sum'.\n");
+                printf("Choose mode 'log' or 'sum', or 'pwk'.\n");
                 return;
         }
 

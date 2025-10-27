@@ -14,10 +14,6 @@ static int get_wk(
         void
 );
 
-static void up_wk(
-        int             w
-);
-
 static void mk_sv(
         void
 );
@@ -55,23 +51,27 @@ static int get_wk(
         int w = rcurr();
 
         if (SUNDAY == day && rq_up_wk()) {
-                mk_sv();
-                up_wk(w);
+                up_wk();
         }
 
         return w;
 }
 
-static void up_wk(
-        int             w
+void up_wk(
+        void
 ) {
+//        mk_sv();
+
         FILE *f = fopen(CURR_PATH, "w");
         if (!f) {
                 return;
         }
 
-        fprintf(f, "%d", w + 1);
+        int c = rcurr();
 
+        printf("Looking at %d\n", c);
+
+        fprintf(f, "%d", c + 1);
         fclose(f);
 }
 
@@ -79,8 +79,6 @@ static void mk_sv(
         void
 ) {
         float t = 100.f - rweek(0);
-
-        sum_sv();
 
         if (t <= 0.f) {
                 printf("No savings this week.\n");
@@ -90,6 +88,8 @@ static void mk_sv(
         printf("Savings of £%.2f this week.\n", t);
 
         adj_sv(t);
+
+        sum_sv();
 }
 
 void adj_sv(
