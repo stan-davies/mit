@@ -60,14 +60,14 @@ static int get_wk(
 void up_wk(
         void
 ) {
-//        mk_sv();
+        mk_sv();
+
+        int c = rcurr();
 
         FILE *f = fopen(CURR_PATH, "w");
         if (!f) {
                 return;
         }
-
-        int c = rcurr();
 
         printf("Looking at %d\n", c);
 
