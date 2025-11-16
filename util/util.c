@@ -11,30 +11,17 @@ int rcurr(
 ) {
         FILE *f = fopen(CURR_PATH, "r");
         if (!f) {
-                // Default value, start afresh. When week progresses, 2 will be
-                // written.
                 return 1;
         }
-
-//        printf("opened\n");
 
         char *buf = calloc(8, sizeof(char));
         char c;
         int i = 0;
         while (EOF != (c = fgetc(f))) {
-//                printf("at '%c'\n", c);
                 buf[i++] = c;
         }
 
         fclose(f);
-
-//        char *cnt = calloc(8, sizeof(char));
-//        fread(cnt, sizeof(char), 8, f);
-
-//        printf("got '%s'\n", buf);
-//        printf("which is %d\n", atoi(buf));
-
-//        fclose(f);
 
         return atoi(buf);
 }
@@ -51,7 +38,6 @@ float rweek(
 
         FILE *f = fopen(fname, "r");
         if (!f) {
-                printf("Error: File '%s' not found.\n", fname);
                 // If no file, give 0 spending for that week, i.e. total = 0.f
                 goto exit;
         }
