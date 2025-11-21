@@ -1,5 +1,6 @@
 #include "sum.h"
 
+#include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -32,8 +33,14 @@ void sum(
                 t += q;
         }
 
-        if (1 == period) {      // No need to give period summary for single
-                return;         // unit period.
+        if (1 == period) {      // No need to give period summary for one week.
+                                // Give daily average spend instead.
+                time_t clock = time(NULL);
+                struct tm datetime = *localtime(&clock);
+                int day = datetime.tm_wday;             // Days since Sunday
+
+                printf("That is an average of £%.2f per day.\n", t / day);
+                return;
         }
 
         printf("In total over this period you have spent ");
