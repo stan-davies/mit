@@ -37,7 +37,8 @@ void sum(
                                 // Give daily average spend instead.
                 time_t clock = time(NULL);
                 struct tm datetime = *localtime(&clock);
-                int day = datetime.tm_wday;             // Days since Sunday
+                int day = datetime.tm_wday;             // Days since Sunday.
+                day = 0 == day ? 7 : day;               // Correct for Sunday.
 
                 printf("That is an average of £%.2f per day.\n", t / day);
                 return;
