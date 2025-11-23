@@ -10,6 +10,8 @@
 
 #define SUNDAY  0
 
+static int proc = FALSE;                // Proceed to new week?
+
 static int get_wk(
         void
 );
@@ -38,6 +40,10 @@ void mk_log(
 
         free(fname);
         fname = NULL;
+
+        if (proc) {
+                up_wk();
+        }
 }
 
 
@@ -51,7 +57,7 @@ static int get_wk(
         int w = rcurr();
 
         if (SUNDAY == day && rq_up_wk()) {
-                up_wk();
+                proc = TRUE;
         }
 
         return w;
@@ -68,8 +74,6 @@ void up_wk(
         if (!f) {
                 return;
         }
-
-        printf("Looking at %d\n", c);
 
         fprintf(f, "%d", c + 1);
         fclose(f);
