@@ -41,7 +41,9 @@ void sum(
 
         if (1 == period) {      // No need to give period summary for one week.
                                 // Give daily average spend instead.
-                ex_data(t);
+                if (t > 0.f) {
+                        ex_data(t);
+                }
                 return;
         }
 
@@ -86,9 +88,9 @@ static void ex_data(
         int day = datetime.tm_wday;             // Days since Sunday.
         day = 0 == day ? 7 : day;               // Correct for Sunday.
 
-        printf("That is an average of ");
+        printf("\nThat is an average of ");
         colourise((float)day / 7.f, spent / day, FALSE);
-        printf(" per day.\n");
+        printf(" per day. ");
         
         float cap = FIRST_B;
         while (spent > cap) {
@@ -96,8 +98,8 @@ static void ex_data(
         }
 
         printf("To remain under the ");
-        colourise((float)day / 7.f, cap, FALSE);
-        printf(" limit this week, try to spend around £%.2f each day for the "
+        colourise(1.f, cap, FALSE);
+        printf(" limit this week, try to spend under £%.2f each day for the "
                "rest of the week, or £%.2f in total.\n",
                 (cap - spent) / (7 - day), cap - spent);
 }
