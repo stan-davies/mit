@@ -12,7 +12,7 @@
 #define CL_ORANGE       11
 #define CL_RED          9
 
-static void colourise(
+static void col_quant(
         float           period          ,
         float           total           ,
         int             nline
@@ -20,6 +20,10 @@ static void colourise(
 
 static void ex_data(
         float           spent
+);
+
+static void print_bar(
+        float           total
 );
 
 void sum(
@@ -35,7 +39,8 @@ void sum(
         for (int w = period; w > 0; --w) {
                 q = rweek(w - 1);
                 printf("Week %d\t\t", period - w + 1);
-                colourise(1.f, q, TRUE);
+                col_quant(1.f, q, FALSE);
+                print_bar(q);
                 t += q;
         }
 
@@ -48,7 +53,7 @@ void sum(
         }
 
         printf("In total over this period you have spent ");
-        colourise((float)period, t, TRUE);
+        col_quant((float)period, t, TRUE);
 }
 
 void sum_sv(
@@ -58,7 +63,7 @@ void sum_sv(
         printf("Total savings are currently £%.2f.\n", s);
 }
 
-static void colourise(
+static void col_quant(
         float           period          ,
         float           total           ,
         int             nline
@@ -89,7 +94,7 @@ static void ex_data(
         day = 0 == day ? 7 : day;               // Correct for Sunday.
 
         printf("\nThat is an average of ");
-        colourise((float)day / 7.f, spent / day, FALSE);
+        col_quant((float)day / 7.f, spent / day, FALSE);
         printf(" per day. ");
         
         float cap = FIRST_B;
@@ -98,8 +103,35 @@ static void ex_data(
         }
 
         printf("To remain under the ");
-        colourise(1.f, cap, FALSE);
+        col_quant(1.f, cap, FALSE);
         printf(" limit this week, try to spend under £%.2f each day for the "
                "rest of the week, or £%.2f in total.\n",
                 (cap - spent) / (7 - day), cap - spent);
+}
+
+static void print_bar(
+        float           total
+) {
+        int col, bxs = 0;
+        for (;;) {
+                if ((float)(++bxs * 5) >= total) {
+                        break;
+                }
+        }
+
+        printf("\t");
+        for (int b = 0; b < bxs; ++b) {
+                if (b < FIRST_B / 5) {
+                        col = CL_L_GREEN;
+                } else if (b < (FIRST_B + B_WIDTH) / 5) {
+                        col = CL_GREEN;
+                } else if (b < (FIRST_B + 2 * B_WIDTH) / 5) {
+                        col = CL_ORANGE;
+                } else {
+                        col = CL_RED;
+                }
+
+                printf("\033[%d;3%dm.\033[0m", col / 8, col % 8);
+        }
+        printf("\n");
 }
