@@ -34,7 +34,7 @@ void sum(
         float t = 0.f;
         for (int w = period; w > 0; --w) {
                 q = rweek(w - 1);
-                printf("Week %d: ", period - w + 1);
+                printf("Week %d\t\t", period - w + 1);
                 colourise(1.f, q, TRUE);
                 t += q;
         }
