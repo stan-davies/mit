@@ -42,6 +42,10 @@ static int get_num(
         float          *num
 );
 
+static void print_ln(
+        void
+);
+
 
 void cli_act(
         int             argc    ,
@@ -73,16 +77,20 @@ void cli_act(
                 return;
         }
 
+        system("clear");
+        print_ln();
+
         switch (params.mode) {
         case MD_LOG:
                 if (PR_SPEC == params.period) {
                         adj_sv(-params.quant);
-                        printf("Logged savings spendings of £%.2f.\n",
+                        printf("  Spent savings\t\t£%.2f\n\n",
                                 params.quant);
                         sum_sv();
                 } else {
                         mk_log(params.quant);
-                        printf("Logged spendings of £%.2f.\n", params.quant);
+                        printf("  Logged spending of\t£%.2f\n\n",
+                                params.quant);
                         sum(1);
                 }
                 break;
@@ -90,6 +98,9 @@ void cli_act(
                 sum(params.period);
                 break;
         }
+
+        printf("\n");
+        print_ln();
 }
 
 static int get_args(
@@ -191,8 +202,14 @@ int rq_up_wk(
 ) {
         char rep;
 
-        printf("Today is Sunday, would you like to proceed to a new week?\n");
+        printf("  Today is Sunday, proceed to new week? y/n\n");
         scanf("%c", &rep);
 
         return REP_YES == rep;
+}
+
+static void print_ln(
+        void
+) {
+        printf("––––––––––––––––––––––––––––––––––––––––––––––––––\n\n");
 }

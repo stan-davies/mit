@@ -31,25 +31,18 @@ static void print_bar(
         float           total
 );
 
-static void print_line(
-        void
-);
-
 void sum(
         int             period
 ) {
-        system("clear");
-        print_line();
-
         if (PR_SPEC == period) {
                 sum_sv();
-                goto ext;
+                return;
         }
 
         if (1 == period) {
-                printf("This week's spending:\n\n");
+                printf("  This week's spending:\n\n");
         } else {
-                printf("Spending over past %d weeks:\n\n", period);
+                printf("  Spending over past %d weeks:\n\n", period);
         }
 
         float q;                                        // Quantity.
@@ -73,11 +66,6 @@ void sum(
         } else {
                 wkly_data(t, period);
         }
-
-
-ext:
-        printf("\n");
-        print_line();
 }
 
 void sum_sv(
@@ -182,10 +170,4 @@ static void print_bar(
                 printf("\033[%d;3%dm%lc\033[0m", col / 8, col % 8, c);
         }
         printf("\n");
-}
-
-static void print_line(
-        void
-) {
-        printf("––––––––––––––––––––––––––––––––––––––––––––––––––\n\n");
 }

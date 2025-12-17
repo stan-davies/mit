@@ -85,11 +85,11 @@ static void mk_sv(
         float t = 100.f - rweek(0);
 
         if (t <= 0.f) {
-                printf("No savings this week.\n");
+                printf("  No savings this week.\n");
                 return;
         }
 
-        printf("Savings of £%.2f this week.\n", t);
+        printf("  Savings of £%.2f this week.\n", t);
 
         adj_sv(t);
 
