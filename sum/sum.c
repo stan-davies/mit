@@ -15,60 +15,81 @@
 
 static void col_quant(
         float           period          ,
-        float           total           ,
-        int             nline
+        float           total
 );
 
-static void ex_data(
+static void dly_data(
         float           spent
+);
+
+static void wkly_data(
+        float           spent           ,
+        int             n_wks
 );
 
 static void print_bar(
         float           total
 );
 
+static void print_line(
+        void
+);
+
 void sum(
         int             period
 ) {
+        system("clear");
+        print_line();
+
         if (PR_SPEC == period) {
                 sum_sv();
-                return;
+                goto ext;
+        }
+
+        if (1 == period) {
+                printf("This week's spending:\n\n");
+        } else {
+                printf("Spending over past %d weeks:\n\n", period);
         }
 
         float q;                                        // Quantity.
         float t = 0.f;                                  // Total.
         int c = rcurr();                                // Current week.
         for (int w = period; w > 0; --w) {              // Week offset.
+                if (c - w < 0) {
+                        continue;
+                }
                 q = rweek(w - 1);
-                printf("Week %d\t\t", c - w + 1);
-                col_quant(1.f, q, FALSE);
+                printf("  week %d\t\t", c - w + 1);
+                col_quant(1.f, q);
                 print_bar(q);
                 t += q;
         }
 
-        if (1 == period) {      // No need to give period summary for one week.
-                                // Give daily average spend instead.
-                if (t > 0.f) {
-                        ex_data(t);
+        if (1 == period) {
+                if (t > 0.f) {          // Start of new week.
+                        dly_data(t);
                 }
-                return;
+        } else {
+                wkly_data(t, period);
         }
 
-        printf("In total over this period you have spent ");
-        col_quant((float)period, t, TRUE);
+
+ext:
+        printf("\n");
+        print_line();
 }
 
 void sum_sv(
         void
 ) {
         float s = rspec();
-        printf("Total savings are currently £%.2f.\n", s);
+        printf("  Savings\t\t£%.2f.\n", s);
 }
 
 static void col_quant(
         float           period          ,
-        float           total           ,
-        int             nline
+        float           total
 ) {
         int col = CL_RED;
 
@@ -81,13 +102,9 @@ static void col_quant(
         }
         
         printf("\033[%d;3%dm£%.2f\033[0m", col / 8, col % 8, total);
-        
-        if (nline) {
-                printf("\n");
-        }
 }
 
-static void ex_data(
+static void dly_data(
         float           spent
 ) {
         time_t t = time(NULL);
@@ -95,20 +112,31 @@ static void ex_data(
         int day = datetime.tm_wday;             // Days since Sunday.
         day = 0 == day ? 7 : day;               // Correct for Sunday.
 
-        printf("\nThat is an average of ");
-        col_quant((float)day / 7.f, spent / day, FALSE);
-        printf(" per day. ");
+        printf("\n  daily average\t\t");
+        col_quant((float)day / 7.f, spent / day);
         
         float cap = FIRST_B;
         while (spent > cap) {
                 cap += B_WIDTH;
         }
 
-        printf("To remain under the ");
-        col_quant(1.f, cap, FALSE);
-        printf(" limit this week, try to spend under £%.2f each day for the "
-               "rest of the week, or £%.2f in total.\n",
+        printf("\n  of ");
+        col_quant(1.f, cap);
+        printf(" you have\n    per day\t\t£%.2f\n    in total\t\t£%.2f\n",
                 (cap - spent) / (7 - day), cap - spent);
+}
+
+static void wkly_data(
+        float           spent   ,
+        int             n_wks
+) {
+        printf("\n  total\t\t\t");
+        col_quant((float)n_wks, spent);
+        printf("\n  daily average\t\t");
+        col_quant(1.f, spent / (n_wks * 7.f));
+        printf("\n  weekly average\t");
+        col_quant(7.f, spent / n_wks);
+        printf("\n");
 }
 
 static void print_bar(
@@ -151,12 +179,13 @@ static void print_bar(
 //                        c = 0x2588;     // Filled box.
                 }
 
-
-// ◦
-// º (alt + 0)
-// • (alt + 8)
-// – (alt + -)
                 printf("\033[%d;3%dm%lc\033[0m", col / 8, col % 8, c);
         }
         printf("\n");
+}
+
+static void print_line(
+        void
+) {
+        printf("––––––––––––––––––––––––––––––––––––––––––––––––––\n\n");
 }
