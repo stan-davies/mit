@@ -35,11 +35,12 @@ void sum(
                 return;
         }
 
-        float q;
-        float t = 0.f;
-        for (int w = period; w > 0; --w) {
+        float q;                                        // Quantity.
+        float t = 0.f;                                  // Total.
+        int c = rcurr();                                // Current week.
+        for (int w = period; w > 0; --w) {              // Week offset.
                 q = rweek(w - 1);
-                printf("Week %d\t\t", period - w + 1);
+                printf("Week %d\t\t", c - w + 1);
                 col_quant(1.f, q, FALSE);
                 print_bar(q);
                 t += q;
