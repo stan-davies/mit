@@ -8,6 +8,7 @@
 #include "util/bounds.h"
 
 #define CL_GREEN        2
+#define CL_CYAN         14
 #define CL_L_GREEN      10
 #define CL_ORANGE       11
 #define CL_RED          9
@@ -71,7 +72,7 @@ static void col_quant(
         int col = CL_RED;
 
         if (total <= FIRST_B * period) {
-                col = CL_GREEN;
+                col = CL_CYAN;
         } else if (total <= (FIRST_B + B_WIDTH) * period) {
                 col = CL_L_GREEN;
         } else if (total <= (FIRST_B + 2.f * B_WIDTH) * period) {
@@ -113,6 +114,7 @@ static void print_bar(
         float           total
 ) {
         int col, bxs = 0;
+        wchar_t c;
         for (;;) {
                 if ((float)(++bxs * 5) >= total) {
                         break;
@@ -121,20 +123,39 @@ static void print_bar(
 
         printf("\t");
         for (int b = 1; b < bxs; ++b) {
+//                c = L'•';
+//                c = 0x2580;     // Top half.
+                c = 0x2501;     // Thick vertical.
+
                 if (b < FIRST_B / 5) {
-                        col = CL_GREEN;
+                        col = 14;
+
+//                        c = L'◦';
+//                        c = 0x2500;     // Thin vertical.
+//                        c = 0x2593;     // Dark box.
                 } else if (b < (FIRST_B + B_WIDTH) / 5) {
                         col = CL_L_GREEN;
+
+//                        c = 0x2501;     // Thick vertical.
+//                        c = 0x2588;     // Filled box.
                 } else if (b < (FIRST_B + 2 * B_WIDTH) / 5) {
                         col = CL_ORANGE;
+
+//                        c = 0x2550;     // Double stroke vertical.
+//                        c = 0x2588;     // Filled box.
                 } else {
                         col = CL_RED;
+
+//                        c = 0x2550;     // Double stroke vertical.
+//                        c = 0x2588;     // Filled box.
                 }
 
+
+// ◦
 // º (alt + 0)
 // • (alt + 8)
 // – (alt + -)
-                printf("\033[%d;3%dm–\033[0m", col / 8, col % 8);
+                printf("\033[%d;3%dm%lc\033[0m", col / 8, col % 8, c);
         }
         printf("\n");
 }
