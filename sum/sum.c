@@ -120,18 +120,21 @@ static void print_bar(
         }
 
         printf("\t");
-        for (int b = 0; b < bxs; ++b) {
+        for (int b = 1; b < bxs; ++b) {
                 if (b < FIRST_B / 5) {
-                        col = CL_L_GREEN;
-                } else if (b < (FIRST_B + B_WIDTH) / 5) {
                         col = CL_GREEN;
+                } else if (b < (FIRST_B + B_WIDTH) / 5) {
+                        col = CL_L_GREEN;
                 } else if (b < (FIRST_B + 2 * B_WIDTH) / 5) {
                         col = CL_ORANGE;
                 } else {
                         col = CL_RED;
                 }
 
-                printf("\033[%d;3%dm.\033[0m", col / 8, col % 8);
+// º (alt + 0)
+// • (alt + 8)
+// – (alt + -)
+                printf("\033[%d;3%dm–\033[0m", col / 8, col % 8);
         }
         printf("\n");
 }
