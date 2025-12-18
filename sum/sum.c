@@ -7,11 +7,10 @@
 #include "util/util.h"
 #include "util/bounds.h"
 
-#define CL_GREEN        2
-#define CL_CYAN         14
-#define CL_L_GREEN      10
-#define CL_ORANGE       11
-#define CL_RED          9
+#define CL_B_1          12      // Bright blue.
+#define CL_B_2          10      // Light green.
+#define CL_B_3          11      // Orange/light yellow.
+#define CL_B_4          9       // Light red.
 
 static void col_quant(
         float           period          ,
@@ -79,17 +78,17 @@ static void col_quant(
         float           period          ,
         float           total
 ) {
-        int col = CL_RED;
+        int col = CL_B_4;
 
         if (total <= FIRST_B * period) {
-                col = CL_CYAN;
+                col = CL_B_1;
         } else if (total <= (FIRST_B + B_WIDTH) * period) {
-                col = CL_L_GREEN;
+                col = CL_B_2;
         } else if (total <= (FIRST_B + 2.f * B_WIDTH) * period) {
-                col = CL_ORANGE;
+                col = CL_B_3;
         }
         
-        printf("\033[%d;3%dm£%.2f\033[0m", col / 8, col % 8, total);
+        printf("\033[%d;%d%dm£%.2f\033[0m", col / 8, 3 + 6 * (col / 8), col % 8, total);
 }
 
 static void dly_data(
@@ -141,33 +140,23 @@ static void print_bar(
         printf("\t");
         for (int b = 1; b < bxs; ++b) {
 //                c = L'•';
+//                c = L'◦';
 //                c = 0x2580;     // Top half.
                 c = 0x2501;     // Thick vertical.
+//                c = L'–';       // Thin vertical.
 
                 if (b < FIRST_B / 5) {
-                        col = 14;
+                        col = CL_B_1;
 
-//                        c = L'◦';
-//                        c = 0x2500;     // Thin vertical.
-//                        c = 0x2593;     // Dark box.
                 } else if (b < (FIRST_B + B_WIDTH) / 5) {
-                        col = CL_L_GREEN;
-
-//                        c = 0x2501;     // Thick vertical.
-//                        c = 0x2588;     // Filled box.
+                        col = CL_B_2;
                 } else if (b < (FIRST_B + 2 * B_WIDTH) / 5) {
-                        col = CL_ORANGE;
-
-//                        c = 0x2550;     // Double stroke vertical.
-//                        c = 0x2588;     // Filled box.
+                        col = CL_B_3;
                 } else {
-                        col = CL_RED;
-
-//                        c = 0x2550;     // Double stroke vertical.
-//                        c = 0x2588;     // Filled box.
+                        col = CL_B_4;
                 }
 
-                printf("\033[%d;3%dm%lc\033[0m", col / 8, col % 8, c);
+                printf("\033[%d;%d%dm%lc\033[0m", col / 8, 3 + 6 * (col / 8), col % 8, c);
         }
         printf("\n");
 }
