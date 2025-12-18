@@ -32,7 +32,7 @@ float rweek(
         int w = rcurr() - offset;
 
         char *fname = calloc(8, sizeof(char));
-        sprintf(fname, "%s/%d", LOGS_PATH, w);
+        sprintf(fname, LOGS_PATH "/%d", w);
 
         float total = 0.f;
 

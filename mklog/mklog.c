@@ -26,7 +26,7 @@ void mk_log(
         int w = get_wk();
         
         char *fname = calloc(8, sizeof(char));
-        sprintf(fname, "%s/%d", LOGS_PATH, w);
+        sprintf(fname, LOGS_PATH "/%d", w);
 
         FILE *f = fopen(fname, "a");
         if (!f) {

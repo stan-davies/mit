@@ -16,10 +16,6 @@
 #define TP_FLT  1
 #define TP_INT  2
 
-#define CH_ZER  48
-#define CH_NIN  57
-#define CH_PT   46
-#define CH_MIN  45
 #define CH_NUL  0
 
 #define REP_YES 121
@@ -170,16 +166,16 @@ static int get_num(
         char *c = str;
         int pt = FALSE;
 
-        if (CH_MIN == *c) {
+        if ('-' == *c) {
                 c++;
         }
 
         for (;;) {
                 if (CH_NUL == *c) {
                         break;
-                } else if (*c >= CH_ZER && *c <= CH_NIN) {
+                } else if (*c >= '0' && *c <= '9') {
                         goto cont;
-                } else if (*c == CH_PT && !pt && TP_FLT == type) {
+                } else if (*c == '.' && !pt && TP_FLT == type) {
                         pt = TRUE;
                         goto cont;
                 } else {
@@ -211,5 +207,8 @@ int rq_up_wk(
 static void print_ln(
         void
 ) {
-        printf("\033[90m––––––––––––––––––––––––––––––––––––––––––––––––––\033[0m\n\n");
+        printf("\033[90m"
+               "––––––––––––––––––––––––––––––––––––––––––––––––––"
+               "\033[0m\n\n");
+
 }
