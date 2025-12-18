@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CH_LF   10
-#define CH_NL   0
-
 int rcurr(
         void
 ) {
@@ -47,12 +44,11 @@ float rweek(
         int j = 0;
 
         while (EOF != (c = fgetc(f))) {
-                if (CH_LF == c) {
+                if ('\n' == c) {
                         total += atof(buf);
-                        for (int i = 0; i < 8; ++i) {
-                                buf[i] = CH_NL;
-                        }
+                        memset(buf, CHR_NULL, 8);
                         j = 0;
+                        continue;
                 }
                 buf[j++] = c;
         }

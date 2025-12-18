@@ -10,7 +10,7 @@
 
 #define SUNDAY  0
 
-static int proc = FALSE;                // Proceed to new week?
+static int proc = FALSE;                // Whether to proceed to new week.
 
 static int get_wk(
         void
@@ -46,7 +46,8 @@ void mk_log(
         }
 }
 
-
+// Scrap this whole function, just use `rcurr`, check for Sunday in `cli.c`
+// after the logging is all done with.
 static int get_wk(
         void
 ) {
@@ -54,13 +55,11 @@ static int get_wk(
         struct tm datetime = *localtime(&t);
         int day = datetime.tm_wday;             // Days since Sunday
 
-        int w = rcurr();
-
         if (SUNDAY == day && rq_up_wk()) {
                 proc = TRUE;
         }
 
-        return w;
+        return rcurr();
 }
 
 void up_wk(

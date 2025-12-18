@@ -16,10 +16,6 @@
 #define TP_FLT  1
 #define TP_INT  2
 
-#define CH_NUL  0
-
-#define REP_YES 121
-
 static struct {
         int             mode    ;
 
@@ -119,8 +115,8 @@ static int get_args(
                 break;
         }
 
-        opterr = 0;     // don't add error messages
-        optind = 2;     // start from after word command
+        opterr = 0;     // Don't add error messages.
+        optind = 2;     // Start from after word command.
         while (-1 != (opt = getopt(argc, argv, optstr))) {
                 switch (opt) {
                 case 'q':
@@ -171,7 +167,7 @@ static int get_num(
         }
 
         for (;;) {
-                if (CH_NUL == *c) {
+                if (CHR_NULL == *c) {
                         break;
                 } else if (*c >= '0' && *c <= '9') {
                         goto cont;
@@ -201,7 +197,7 @@ int rq_up_wk(
         printf("  Today is Sunday, proceed to new week? y/n\n");
         scanf("%c", &rep);
 
-        return REP_YES == rep;
+        return 'y' == rep;
 }
 
 static void print_ln(
