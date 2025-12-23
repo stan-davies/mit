@@ -75,7 +75,7 @@ void sum_sv(
 }
 
 static void col_quant(
-        float           period          ,
+        float           period          ,       // 1 refers to 1 week.
         float           total
 ) {
         int col = CL_B_4;
@@ -120,9 +120,9 @@ static void wkly_data(
         printf("\n  total\t\t\t");
         col_quant((float)n_wks, spent);
         printf("\n  daily average\t\t");
-        col_quant(1.f, spent / (n_wks * 7.f));
+        col_quant(1.f / 7.f, spent / (n_wks * 7.f));
         printf("\n  weekly average\t");
-        col_quant(7.f, spent / n_wks);
+        col_quant(1.f, spent / n_wks);
         printf("\n");
 }
 
@@ -141,9 +141,8 @@ static void print_bar(
         for (int b = 1; b < bxs; ++b) {
 //                c = L'•';
 //                c = L'◦';
-//                c = 0x2580;     // Top half.
-                c = 0x2501;     // Thick vertical.
-//                c = L'–';       // Thin vertical.
+//                c = L'▀';
+                c = L'━';
 
                 if (b < FIRST_B / 5) {
                         col = CL_B_1;

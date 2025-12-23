@@ -1,4 +1,3 @@
-#define PR_SPEC -1
 #include "cli.h"
 
 #include <string.h>
@@ -10,11 +9,13 @@
 #include "mklog/mklog.h"
 #include "sum/sum.h"
 
-#define MD_LOG  1
-#define MD_SUM  2
+#define PR_SPEC        -1
 
-#define TP_FLT  1
-#define TP_INT  2
+#define MD_LOG          1
+#define MD_SUM          2
+
+#define TP_FLT          1
+#define TP_INT          2
 
 static struct {
         int             mode    ;
@@ -61,8 +62,7 @@ void cli_act(
                 return;
         }
 
-        // defaults
-        params.quant = 0.f;
+        params.quant = 0.f;     // Really needed? - check if used.
         params.period = 1;
 
         if (!get_args(argc, argv)) {
@@ -111,8 +111,8 @@ static int get_args(
         case MD_SUM:
                 sprintf(optstr, ":p:s");
                 break;
-        default:
-                break;
+//        default:
+//                break;  // Inaccessible.
         }
 
         opterr = 0;     // Don't add error messages.
