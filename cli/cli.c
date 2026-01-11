@@ -13,6 +13,7 @@
 
 #define MD_LOG          1
 #define MD_SUM          2
+#define MD_PWK          3
 
 #define TP_FLT          1
 #define TP_INT          2
@@ -54,9 +55,8 @@ void cli_act(
         } else if (0 == strcmp(argv[1], "sum")) {
                 params.mode = MD_SUM;
         } else if (0 == strcmp(argv[1], "pwk")) {
-                up_wk();                
-                printf("Progressed week.\n");
-                return;
+                params.mode = MD_PWK;
+                goto op_response;
         } else {
                 printf("Choose mode 'log' or 'sum', or 'pwk'.\n");
                 return;
@@ -69,6 +69,7 @@ void cli_act(
                 return;
         }
 
+op_response:
         system("clear");
         print_ln();
 
@@ -88,6 +89,10 @@ void cli_act(
                 break;
         case MD_SUM:
                 sum(params.period);
+                break;
+        case MD_PWK:
+                up_wk();                
+                printf("Progressed week.\n");
                 break;
         }
 
