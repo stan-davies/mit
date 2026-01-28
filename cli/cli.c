@@ -114,7 +114,7 @@ static int get_args(
                 sprintf(optstr, ":q:s");
                 break;
         case MD_SUM:
-                sprintf(optstr, ":p:s");
+                sprintf(optstr, ":p:sa");
                 break;
 //        default:
 //                break;  // Inaccessible.
@@ -132,6 +132,9 @@ static int get_args(
                         break;
                 case 's':
                         params.period = PR_SPEC;
+                        break;
+                case 'a':
+                        params.period = PR_ALL;
                         break;
                 case 'p':
                         if (!get_num(TP_INT, optarg, &fv)) {

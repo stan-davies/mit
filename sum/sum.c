@@ -33,20 +33,25 @@ static void print_bar(
 void sum(
         int             period
 ) {
-        if (PR_SPEC == period) {
-                sum_sv();
-                return;
-        }
-
-        if (1 == period) {
-                printf("  This week's spending:\n\n");
-        } else {
-                printf("  Spending over past %d weeks:\n\n", period);
-        }
-
         float q;                                        // Quantity.
         float t = 0.f;                                  // Total.
         int c = rcurr();                                // Current week.
+
+        switch (period) {
+        case PR_SPEC:
+                sum_sv();
+                return;
+        case 1:
+                printf("  This week's spending:\n\n");
+                break;
+        case PR_ALL:
+                period = c;
+                // No break.
+        default:
+                printf("  Spending over past %d weeks:\n\n", period);
+                break;
+        }
+
         for (int w = period; w > 0; --w) {              // Week offset.
                 if (c - w < 0) {
                         continue;
