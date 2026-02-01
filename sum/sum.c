@@ -112,6 +112,11 @@ static void dly_data(
                 cap += B_WIDTH;
         }
 
+        if (7 == day) {
+                printf("\n");   // Need the padding.
+                return;         // No use in 'money remaining' on Sunday.
+        }
+
         printf("\n  of ");
         col_quant(1.f, cap);
         printf(" you have\n    per day\t\t£%.2f\n    in total\t\t£%.2f\n",
