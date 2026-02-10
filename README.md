@@ -9,3 +9,6 @@ There was a strange error talking about heap corruption that I got when doing a
 summary of a large number of weeks (18, for example) but it seems to have gone
 away in that, whilst trying to test which numbers of weeks it would happen for,
 it just stopped happening at all. Fine by me!
+
+I got it again, when doing `mit sum -a`. It is the same heap corruption that
+has plagued several of my recent projects. Very confusing indeed.

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "util/util.h"
 #include "mklog/mklog.h"
@@ -17,6 +18,8 @@
 
 #define TP_FLT          1
 #define TP_INT          2
+
+#define SUNDAY  0
 
 static struct {
         int             mode    ;
@@ -37,6 +40,10 @@ static int get_num(
 );
 
 static void print_ln(
+        void
+);
+
+static void check_up_wk(
         void
 );
 
@@ -85,6 +92,8 @@ op_response:
                         printf("  Logged spending of\t£%.2f\n\n",
                                 params.quant);
                         sum(1);
+
+                        check_up_wk();
                 }
                 break;
         case MD_SUM:
@@ -215,4 +224,16 @@ static void print_ln(
                "––––––––––––––––––––––––––––––––––––––––––––––––––"
                "\033[0m\n\n");
 
+}
+
+static void check_up_wk(
+        void
+) {
+        time_t t = time(NULL);
+        struct tm datetime = *localtime(&t);
+        int day = datetime.tm_wday;             // Days since Sunday
+
+        if (SUNDAY == day && rq_up_wk()) {
+                up_wk();
+        }
 }
