@@ -28,8 +28,11 @@ float rweek(
         int             offset
 ) {
         int w = rcurr() - offset;
+        if (w <= 0) {
+                return 0.f;
+        }
 
-        char *fname = calloc(8, sizeof(char));
+        char *fname = calloc(64, sizeof(char));
         sprintf(fname, LOGS_PATH "/%d", w);
 
         float total = 0.f;
@@ -46,12 +49,19 @@ float rweek(
 
         while (EOF != (c = fgetc(f))) {
                 if ('\n' == c) {
+                        if (j < 0 || j >= 8) {  // ?
+                                printf("rweek cap out of bounds\n");
+                        }
+                        buf[j] = '\0';
                         total += atof(buf);
                         memset(buf, CHR_NULL, 8);
                         j = 0;
                         continue;
                 }
-                buf[j++] = c;
+                if (j < 0 || j >= 8) {          // ?
+                        printf("rweek out of bounds\n");
+                }
+                buf[j++] = c;   // Notably nothing to prevent writing beyond capacity.
         }
 
         free(buf);
@@ -78,7 +88,10 @@ float rspec(
         char c;
         int i = 0;
         while (EOF != (c = fgetc(f))) {
-                buf[i++] = c;
+                if (i >= 8) {
+                        printf("too many characters in special data");
+                }
+                buf[i++] = c;   // Longer than 8 characters... Probably not.
         }
 
         fclose(f);

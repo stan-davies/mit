@@ -12,3 +12,10 @@ it just stopped happening at all. Fine by me!
 
 I got it again, when doing `mit sum -a`. It is the same heap corruption that
 has plagued several of my recent projects. Very confusing indeed.
+
+Got to be some kind of going beyond boundaries.
+
+It's back to not doing the error.
+
+Might have solved by realising that I was putting a very long path into an 8
+character long buffer (and somehow it was usually working!?). Continue testing.

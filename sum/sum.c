@@ -56,7 +56,7 @@ void sum(
                 if (c - w < 0) {
                         continue;
                 }
-                q = rweek(w - 1);
+                q = rweek(w - 1);                       // Problem?
                 printf("  week %d\t\t", c - w + 1);
                 col_quant(1.f, q);
                 print_bar(q);
@@ -64,7 +64,7 @@ void sum(
         }
 
         if (1 == period) {
-                if (t > 0.f) {          // Start of new week.
+                if (t > 0.f) {                          // Start of new week.
                         dly_data(t);
                 }
         } else {
