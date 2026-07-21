@@ -69,7 +69,7 @@ void cli_act(
                 return;
         }
 
-        params.quant = 0.f;     // Really needed? - check if used.
+        params.quant = 0.f;
         params.period = 1;
 
         if (!get_args(argc, argv)) {
@@ -86,7 +86,7 @@ op_response:
                         adj_sv(-params.quant);
                         printf("  Spent savings\t\t£%.2f\n\n",
                                 params.quant);
-                        sum_sv();
+                        sum(PR_SPEC);
                 } else {
                         mk_log(params.quant);
                         printf("  Logged spending of\t£%.2f\n\n",
@@ -184,7 +184,7 @@ static int get_num(
         }
 
         for (;;) {
-                if (CHR_NULL == *c) {
+                if ('\0' == *c) {
                         break;
                 } else if (*c >= '0' && *c <= '9') {
                         goto cont;

@@ -8,8 +8,4 @@ void sum(
         int             period
 );
 
-void sum_sv(
-        void
-);
-
 #endif

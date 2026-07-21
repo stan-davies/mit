@@ -19,3 +19,7 @@ It's back to not doing the error.
 
 Might have solved by realising that I was putting a very long path into an 8
 character long buffer (and somehow it was usually working!?). Continue testing.
+
+---
+
+Don't remember all these errors... Probably okay... I hope...

@@ -7,6 +7,11 @@
 #include "cli/cli.h"
 #include "sum/sum.h"
 
+static void write_q(
+        float           quant   ,
+        char           *fname
+);
+
 static void mk_sv(
         void
 );
@@ -19,15 +24,7 @@ void mk_log(
         char *fname = calloc(8, sizeof(char));
         sprintf(fname, LOGS_PATH "/%d", w);
 
-        FILE *f = fopen(fname, "a");
-        if (!f) {
-                printf("Error: Log file not found.\n");
-                return;
-        }
-
-        fprintf(f, "%.2f\n", quant);
-
-        fclose(f);
+        write_q(quant, fname);
 
         free(fname);
         fname = NULL;
@@ -49,6 +46,27 @@ void up_wk(
         fclose(f);
 }
 
+void adj_sv(
+        float           quant
+) {
+        write_q(quant, SAVE_PATH);
+}
+
+static void write_q(
+        float           quant   ,
+        char           *fname
+) {
+        FILE *f = fopen(fname, "a");
+        if (!f) {
+                printf("Error: Log file not found.\n");
+                return;
+        }
+
+        fprintf(f, "%.2f\n", quant);
+        fclose(f);
+        f = NULL;
+}
+
 static void mk_sv(
         void
 ) {
@@ -63,19 +81,5 @@ static void mk_sv(
 
         adj_sv(t);
 
-        sum_sv();
-}
-
-void adj_sv(
-        float           quant
-) {
-        float s = rspec() + quant;
-
-        FILE *f = fopen(SAVE_PATH, "w");
-        if (!f) {
-                return;
-        }
-
-        fprintf(f, "%.2f", s);
-        fclose(f);
+        sum(PR_SPEC);
 }

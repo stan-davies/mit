@@ -12,6 +12,10 @@
 #define CL_B_3          11      // Orange/light yellow.
 #define CL_B_4          9       // Light red.
 
+static void sum_sv(
+        void
+);
+
 static void col_quant(
         float           period          ,
         float           total
@@ -56,7 +60,7 @@ void sum(
                 if (c - w < 0) {
                         continue;
                 }
-                q = rweek(w - 1);                       // Problem?
+                q = rweek(w - 1);                       // Problem? - Huh!?
                 printf("  week %d\t\t", c - w + 1);
                 col_quant(1.f, q);
                 print_bar(q);
@@ -72,7 +76,7 @@ void sum(
         }
 }
 
-void sum_sv(
+static void sum_sv(
         void
 ) {
         float s = rspec();
@@ -80,7 +84,7 @@ void sum_sv(
 }
 
 static void col_quant(
-        float           period          ,       // 1 refers to 1 week.
+        float           period          ,       // In weeks.
         float           total
 ) {
         int col = CL_B_4;

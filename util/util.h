@@ -4,8 +4,6 @@
 #define TRUE            1
 #define FALSE           0
 
-#define CHR_NULL        0
-
 #include "paths.h"
 
 int rcurr(
