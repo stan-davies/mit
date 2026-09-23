@@ -41,6 +41,8 @@ void sum(
         float t = 0.f;                                  // Total.
         int c = rcurr();                                // Current week.
 
+        period = period > c ? c : period;       // Clamp to existent data.
+
         switch (period) {
         case PR_SPEC:
                 sum_sv();
@@ -49,14 +51,13 @@ void sum(
                 printf("  This week's spending:\n\n");
                 break;
         case PR_ALL:
+                // Change PR_ALL to have value INF so caught in above condition?
                 period = c;
                 // No break.
         default:
                 printf("  Spending over past %d weeks:\n\n", period);
                 break;
         }
-
-        period = period > c ? c : period;               // Clamp to existent data.
 
         for (int w = period; w > 0; --w) {              // Week offset.
                 q = rweek(w - 1);                       // Problem? - Huh!?
