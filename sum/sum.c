@@ -56,10 +56,9 @@ void sum(
                 break;
         }
 
+        period = period > c ? c : period;               // Clamp to existent data.
+
         for (int w = period; w > 0; --w) {              // Week offset.
-                if (c - w < 0) {
-                        continue;
-                }
                 q = rweek(w - 1);                       // Problem? - Huh!?
                 printf("  week %d\t\t", c - w + 1);
                 col_quant(1.f, q);
