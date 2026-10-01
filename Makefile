@@ -1,5 +1,5 @@
 CMD = gcc
-SRC = main.c cli/cli.c mklog/mklog.c sum/sum.c util/util.c
+SRC = main.c cli/cli.c mklog/mklog.c sum/sum.c util/util.c rec/rec.c
 OBJ = $(SRC:.c=.o)
 INC = -I .
 OUT = mit

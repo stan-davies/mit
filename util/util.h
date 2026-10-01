@@ -14,6 +14,10 @@ float rweek(
         int             offset
 );
 
+char *rweekr(           // Reads weeks raw, i.e. text in file. Caller must free.
+        int             offset
+);
+
 float rspec(
         void
 );

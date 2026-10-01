@@ -9,12 +9,14 @@
 #include "util/util.h"
 #include "mklog/mklog.h"
 #include "sum/sum.h"
+#include "rec/rec.h"
 
 #define PR_SPEC        -1
 
 #define MD_LOG          1
 #define MD_SUM          2
 #define MD_PWK          3
+#define MD_REC          4
 
 #define TP_FLT          1
 #define TP_INT          2
@@ -64,8 +66,11 @@ void cli_act(
         } else if (0 == strcmp(argv[1], "pwk")) {
                 params.mode = MD_PWK;
                 goto op_response;
+        } else if (0 == strcmp(argv[1], "rec")) {
+                params.mode = MD_REC;
         } else {
-                printf("Choose mode 'log' or 'sum', or 'pwk'.\n");
+                // Add proper usage command?
+                printf("Available functions are: log, sum, rec, pwk.\n");
                 return;
         }
 
@@ -102,6 +107,9 @@ op_response:
         case MD_PWK:
                 up_wk();                
                 printf("Progressed week.\n");
+                break;
+        case MD_REC:
+                rec();
                 break;
         }
 

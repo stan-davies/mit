@@ -47,6 +47,35 @@ float rweek(
         return total;
 }
 
+char *rweekr(
+        int             offset
+) {
+        char *raw = NULL;
+
+        int w = rcurr() - offset;
+        if (w <= 0) {
+                return NULL;
+        }
+
+        char *fname = calloc(64, sizeof(char));
+        sprintf(fname, LOGS_PATH "/%d", w);
+
+        FILE *f = fopen(fname, "r");
+        if (!f) {
+                goto exit;
+        }
+
+        raw = calloc(64, sizeof(char));
+        int l = fread(raw, sizeof(char), 64, f);
+        raw[l - 2] = '\0'; // Replace penultimate char (always '\n') with '\0'.
+
+exit:
+        free(fname);
+        fname = NULL;
+
+        return raw;
+}
+
 float rspec(
         void
 ) {
