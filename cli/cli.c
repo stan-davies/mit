@@ -49,13 +49,17 @@ static void check_up_wk(
         void
 );
 
+static void usage(
+        void
+);
+
 
 void cli_act(
         int             argc    ,
         char          **argv
 ) {
         if (1 == argc) {
-                printf("Choose mode 'log' or 'sum'.\n");
+                usage();
                 return;
         }
 
@@ -69,8 +73,7 @@ void cli_act(
         } else if (0 == strcmp(argv[1], "rec")) {
                 params.mode = MD_REC;
         } else {
-                // Add proper usage command?
-                printf("Available functions are: log, sum, rec, pwk.\n");
+                usage();
                 return;
         }
 
@@ -244,4 +247,11 @@ static void check_up_wk(
         if (SUNDAY == day && rq_up_wk()) {
                 up_wk();
         }
+}
+
+static void usage(
+        void
+) {
+        printf("usage:\tmit log -q quantity [-s]\n\tmit sum [-a | -p period]" \
+               " [-s]\n\tmit rec\n\tmit pwk\n");
 }
