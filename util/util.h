@@ -22,4 +22,8 @@ float rspec(
         void
 );
 
+char *rspecr(           // Reads special raw, i.e. text in file. Caller must free.
+        void
+);
+
 #endif

@@ -65,8 +65,12 @@ char *rweekr(
                 goto exit;
         }
 
-        raw = calloc(64, sizeof(char));
-        int l = fread(raw, sizeof(char), 64, f);
+        fseek(f, 0, SEEK_END);
+        int ln = ftell(f) + 1;
+        rewind(f);
+
+        raw = calloc(ln, sizeof(char));
+        int l = fread(raw, sizeof(char), ln, f);
         raw[l - 2] = '\0'; // Replace penultimate char (always '\n') with '\0'.
 
 exit:
@@ -80,6 +84,25 @@ float rspec(
         void
 ) {
         return sum_file(SAVE_PATH);
+}
+
+char *rspecr(
+        void
+) {
+        FILE *f = fopen(SAVE_PATH, "r");
+        if (!f) {
+                return NULL;
+        }
+
+        fseek(f, 0, SEEK_END);
+        int ln = ftell(f) + 1;
+        rewind(f);
+
+        char *raw = calloc(ln, sizeof(char));
+        int l = fread(raw, sizeof(char), ln, f);
+        raw[l - 2] = '\0'; // Replace penultimate char (always '\n') with '\0'.
+
+        return raw;
 }
 
 static float sum_file(

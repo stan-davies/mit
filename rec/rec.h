@@ -2,7 +2,7 @@
 #define REC_H
 
 void rec(
-        void
+        int             s       // Whether or not to do records for savings.
 );
 
 #endif

@@ -112,7 +112,7 @@ op_response:
                 printf("Progressed week.\n");
                 break;
         case MD_REC:
-                rec();
+                rec((PR_SPEC == params.period));
                 break;
         }
 
@@ -136,6 +136,8 @@ static int get_args(
         case MD_SUM:
                 sprintf(optstr, ":p:sa");
                 break;
+        case MD_REC:
+                sprintf(optstr, ":s");
 //        default:
 //                break;  // Inaccessible.
         }
