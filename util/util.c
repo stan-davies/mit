@@ -71,7 +71,7 @@ char *rweekr(
 
         raw = calloc(ln, sizeof(char));
         int l = fread(raw, sizeof(char), ln, f);
-        raw[l - 2] = '\0'; // Replace penultimate char (always '\n') with '\0'.
+        raw[l - 1] = '\0'; // Replace penultimate char (always '\n') with '\0'.
 
 exit:
         free(fname);
@@ -100,7 +100,7 @@ char *rspecr(
 
         char *raw = calloc(ln, sizeof(char));
         int l = fread(raw, sizeof(char), ln, f);
-        raw[l - 2] = '\0'; // Replace penultimate char (always '\n') with '\0'.
+        raw[l - 1] = '\0'; // Replace penultimate char (always '\n') with '\0'.
 
         return raw;
 }
