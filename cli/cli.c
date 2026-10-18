@@ -90,7 +90,9 @@ op_response:
 
         switch (params.mode) {
         case MD_LOG:
-                if (PR_SPEC == params.period) {
+                if (0.f == params.quant) {
+                        printf("Please give a quantity to log with -q.\n");
+                } else if (PR_SPEC == params.period) {
                         adj_sv(-params.quant);
                         printf("  Spent savings\t\t£%.2f\n\n",
                                 params.quant);
