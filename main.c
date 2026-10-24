@@ -8,6 +8,5 @@ int main(
 ) {
         setlocale(LC_CTYPE, "");       // Enables printing of fancy characters.
 
-        cli_act(argc, argv);
-        return 1;
+        return cli_act(argc, argv);
 }

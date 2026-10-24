@@ -54,13 +54,13 @@ static void usage(
 );
 
 
-void cli_act(
+int cli_act(
         int             argc    ,
         char          **argv
 ) {
         if (1 == argc) {
                 usage();
-                return;
+                return 1;
         }
 
         if (0 == strcmp(argv[1], "log")) {
@@ -74,24 +74,27 @@ void cli_act(
                 params.mode = MD_REC;
         } else {
                 usage();
-                return;
+                return 1;
         }
 
         params.quant = 0.f;
         params.period = 1;
 
         if (!get_args(argc, argv)) {
-                return;
+                printf("Error: could not get arguments.\n");
+                return 2;
         }
 
 op_response:
         system("clear");
         print_ln();
+        int rt = 0;
 
         switch (params.mode) {
         case MD_LOG:
                 if (0.f == params.quant) {
                         printf("Please give a quantity to log with -q.\n");
+                        rt = 1;
                 } else if (PR_SPEC == params.period) {
                         adj_sv(-params.quant);
                         printf("  Spent savings\t\t£%.2f\n\n",
@@ -120,6 +123,8 @@ op_response:
 
         printf("\n");
         print_ln();
+
+        return rt;
 }
 
 static int get_args(
