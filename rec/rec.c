@@ -13,12 +13,13 @@ static void print_sr(
         char           *rec
 );
 
-void rec(
+int rec(
         int             s
 ) {
         char *rec = s ? rspecr() : rweekr(0);
         if (!rec) {
                 printf("  Could not read requested records.\n");
+                return FALSE;
         }
 
         if (s) {
@@ -29,6 +30,7 @@ void rec(
 
         free(rec);
         rec = NULL;
+        return TRUE;
 }
 
 static void print_wr(
