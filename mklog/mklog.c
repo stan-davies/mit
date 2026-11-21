@@ -20,8 +20,8 @@ void mk_log(
         float           quant
 ) {
         int w = rcurr();
-        
-        char *fname = calloc(8, sizeof(char));
+
+        char *fname = calloc(64, sizeof(char));
         sprintf(fname, LOGS_PATH "/%d", w);
 
         write_q(quant, fname);

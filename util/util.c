@@ -16,7 +16,7 @@ int rcurr(
                 return 1;
         }
 
-        char *buf = calloc(8, sizeof(char));
+        char *buf = calloc(16, sizeof(char));
         char c;
         int i = 0;
         while (EOF != (c = fgetc(f))) {

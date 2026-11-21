@@ -101,6 +101,7 @@ op_response:
                                 params.quant);
                         sum(PR_SPEC);
                 } else {
+                        printf("  Sending %.2f\n", params.quant);
                         mk_log(params.quant);
                         printf("  Logged spending of\t£%.2f\n\n",
                                 params.quant);
