@@ -115,7 +115,7 @@ op_response:
                 break;
         case MD_PWK:
                 up_wk();                
-                printf("Progressed week.\n");
+                printf("\n  Progressed week.\n");
                 break;
         case MD_REC:
                 if (!rec((PR_SPEC == params.period))) {
