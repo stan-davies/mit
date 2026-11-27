@@ -61,7 +61,8 @@ void sum(
 
         for (int w = period; w > 0; --w) {              // Week offset.
                 q = rweek(w - 1);                       // Problem? - Huh!?
-                printf("  week %d\t\t", c - w + 1);
+//                printf("  week %5d|\t\t", c - w + 1);
+                printf("  week %-3d\033[37m%s ", c - w + 1, "………………………………");
                 col_quant(1.f, q);
                 print_bar(q);
                 t += q;
